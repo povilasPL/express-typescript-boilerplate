@@ -1,21 +1,14 @@
 version: '3'
-
-services: 
-  mongo:
-    image: mongo
-    volumes: 
-      - ./data:/data/db
-    ports: 
-      - "27017:27017"
-
-  server:
-    depends_on: 
-      - mongo
-    build:
-      context: .
-      dockerfile: Dockerfile
-    expose:
-      - '9000'
+services:
+  app:
+    restart: always
+    build: .
     ports:
       - '9000:9000'
+    external_links:
+      - mongo
     command: npm run start
+  mongo:
+    image: mongo
+    ports:
+      - '27017:27017'
