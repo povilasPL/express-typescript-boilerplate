@@ -2,12 +2,12 @@ import express from "express";
 import { body } from "express-validator";
 
 import { CommonRoutesConfig } from "../common/common.routes.config";
-import BodyValidationMiddleware from "../common/middleware/body.validation.middleware";
+import bodyValidationMiddleware from "../common/middleware/body.validation.middleware";
+import commonPermissionMiddleware from "../common/middleware/common.permission.middleware";
+import { PermissionLevel } from "../common/middleware/common.permissionlevel.enum";
 import usersController from "./controllers/users.controller";
 import usersMiddleware from "./middleware/users.middleware";
 import jwtMiddleware from "../auth/middleware/jwt.middleware";
-import commonPermissionMiddleware from "../common/middleware/common.permission.middleware";
-import { PermissionLevel } from "../common/middleware/common.permissionlevel.enum";
 
 export class UsersRoutes extends CommonRoutesConfig {
   constructor(app: express.Application) {
@@ -29,7 +29,7 @@ export class UsersRoutes extends CommonRoutesConfig {
         body("password")
           .isLength({ min: 6 })
           .withMessage("Password should be at least 6 characters"),
-        BodyValidationMiddleware.verifyBodyFieldsErrors,
+        bodyValidationMiddleware.verifyBodyFieldsErrors,
         usersMiddleware.validateSameEmailDoesntExist,
         usersController.createUser
       );
@@ -54,7 +54,7 @@ export class UsersRoutes extends CommonRoutesConfig {
       body("firstName").isString(),
       body("lastName").isString(),
       body("permissionLevel").isInt(),
-      BodyValidationMiddleware.verifyBodyFieldsErrors,
+      bodyValidationMiddleware.verifyBodyFieldsErrors,
       usersMiddleware.validateSameEmailBelongToSameUser,
       usersMiddleware.userCantChangePermissionLevel,
       commonPermissionMiddleware.minimumPermissionLevelRequired(
@@ -72,7 +72,7 @@ export class UsersRoutes extends CommonRoutesConfig {
       body("firstName").isString().optional(),
       body("lastName").isString().optional(),
       body("permissionLevel").isInt().optional(),
-      BodyValidationMiddleware.verifyBodyFieldsErrors,
+      bodyValidationMiddleware.verifyBodyFieldsErrors,
       usersMiddleware.validatePatchEmail,
       usersMiddleware.userCantChangePermissionLevel,
       commonPermissionMiddleware.minimumPermissionLevelRequired(

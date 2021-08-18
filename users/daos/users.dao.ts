@@ -2,10 +2,10 @@ import shortid from "shortid";
 import debug from "debug";
 
 import MongooseService from "../../common/services/mongoose.service";
+import { PermissionLevel } from "../../common/middleware/common.permissionlevel.enum";
 import { CreateUserDto } from "../dto/create.user.dto";
 import { PutUserDto } from "../dto/put.user.dto";
 import { PatchUserDto } from "../dto/patch.user.dto";
-import { PermissionLevel } from "../../common/middleware/common.permissionlevel.enum";
 
 const log: debug.IDebugger = debug("app:in-memory-dao");
 
