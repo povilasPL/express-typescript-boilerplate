@@ -2,6 +2,8 @@ import express from "express";
 import cors from "cors";
 import debug from "debug";
 import dotenv from "dotenv";
+import helment from 'helmet';
+
 import * as http from "http";
 import * as winston from "winston";
 import * as expressWinston from "express-winston";
@@ -41,6 +43,7 @@ if (!process.env.DEBUG) {
 
 app.use(express.json());
 app.use(cors());
+app.use(helment());
 app.use(expressWinston.logger(loggerOptions));
 
 routes.push(new UsersRoutes(app));

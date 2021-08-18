@@ -5,7 +5,7 @@ import crypto from "crypto";
 import usersService from "../../users/services/users.service";
 import { Jwt } from "../../common/types/jwt";
 
-const jwtSecret: string = `${process.env.JWT_SECRET}`;
+const jwtSecret = `${process.env.JWT_SECRET}`;
 
 class JwtMiddleware {
   verifyRefreshBodyField(

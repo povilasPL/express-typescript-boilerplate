@@ -14,7 +14,7 @@ export class UsersRoutes extends CommonRoutesConfig {
     super(app, "UsersRoutes");
   }
 
-  configureRoutes() {
+  configureRoutes() : express.Application {
     this.app
       .route(`/users`)
       .get(
