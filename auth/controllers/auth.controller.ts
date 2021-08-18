@@ -6,7 +6,7 @@ import crypto from "crypto";
 const log: debug.IDebugger = debug("app:auth-controller");
 
 const jwtSecret = `${process.env.JWT_SECRET}`;
-const tokenExpirationInSeconds = 36000;
+const tokenExpirationInSeconds = 3600;
 
 class AuthController {
   async createJWT(req: express.Request, res: express.Response) {
@@ -23,7 +23,7 @@ class AuthController {
       });
       return res.status(201).send({ accessToken: token, refreshToken: hash });
     } catch (err) {
-      log("createJWT error: %O", err);
+      log("createJWT error", err);
       return res.status(500).send();
     }
   }
