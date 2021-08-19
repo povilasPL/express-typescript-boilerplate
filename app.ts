@@ -20,7 +20,7 @@ const port = process.env.PORT || 3000;
 const routes: Array<CommonRoutesConfig> = [];
 const runningMessage = `Server is up and running at http://localhost:${port}`;
 
-if (process.env.NODE_ENV !== 'development' && dotenvResult.error) throw dotenvResult.error;
+if (dotenvResult.error) console.log(dotenvResult.error);
 
 const loggerOptions: expressWinston.LoggerOptions = {
   transports: [new winston.transports.Console()],
