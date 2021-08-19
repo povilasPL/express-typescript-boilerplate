@@ -15,7 +15,7 @@ import { UsersRoutes } from "./users/users.routes.config";
 const app: express.Application = express();
 const server: http.Server = http.createServer(app);
 const debugLog: debug.IDebugger = debug("app");
-const dotenvResult = dotenv.config();
+const dotenvResult = dotenv.config({ path: __dirname + './.env' });
 const port = process.env.PORT || 3000;
 const routes: Array<CommonRoutesConfig> = [];
 const runningMessage = `Server is up and running at http://localhost:${port}`;
