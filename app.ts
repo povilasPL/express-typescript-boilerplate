@@ -45,7 +45,7 @@ app.use(expressWinston.logger(loggerOptions));
 routes.push(new UsersRoutes(app));
 routes.push(new AuthRoutes(app));
 
-app.get("/", (req: express.Request, res: express.Response) => {
+app.get(`${process.env.BASE_URL}`, (req: express.Request, res: express.Response) => {
   res.status(200).send(runningMessage);
 });
 

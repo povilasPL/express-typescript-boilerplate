@@ -11,6 +11,7 @@ class MongooseService {
     serverSelectionTimeoutMS: 5000,
     useFindAndModify: false,
   };
+  private MONGO_URI = `mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_IP}:${process.env.MONGO_PORT}/?authSource=admin`;
 
   constructor() {
     this.connectWithRetry();
@@ -24,7 +25,7 @@ class MongooseService {
     log("Attempting MongoDB connection");
 
     await mongoose
-      .connect("mongodb://mongo:27017/db", this.mongooseOptions)
+      .connect(this.MONGO_URI, this.mongooseOptions)
       .then(() => {
         log("MongoDB is connected");
       })

@@ -16,7 +16,7 @@ export class UsersRoutes extends CommonRoutesConfig {
 
   configureRoutes() : express.Application {
     this.app
-      .route(`/users`)
+      .route(`${process.env.BASE_URL}/users`)
       .get(
         jwtMiddleware.validJWTNeeded,
         commonPermissionMiddleware.minimumPermissionLevelRequired(
@@ -34,10 +34,10 @@ export class UsersRoutes extends CommonRoutesConfig {
         usersController.createUser
       );
 
-    this.app.param(`userId`, usersMiddleware.extractUserId);
+    this.app.param('userId', usersMiddleware.extractUserId);
 
     this.app
-      .route(`/users/:userId`)
+      .route(`${process.env.BASE_URL}/users/:userId`)
       .all(
         usersMiddleware.validateUserExists,
         jwtMiddleware.validJWTNeeded,
@@ -46,7 +46,7 @@ export class UsersRoutes extends CommonRoutesConfig {
       .get(usersController.getUserById)
       .delete(usersController.removeUser);
 
-    this.app.put(`/users/:userId`, [
+    this.app.put(`${process.env.BASE_URL}/users/:userId`, [
       body("email").isEmail(),
       body("password")
         .isLength({ min: 6 })
@@ -63,7 +63,7 @@ export class UsersRoutes extends CommonRoutesConfig {
       usersController.put,
     ]);
 
-    this.app.patch(`/users/:userId`, [
+    this.app.patch(`${process.env.BASE_URL}/users/:userId`, [
       body("email").isEmail().optional(),
       body("password")
         .isLength({ min: 6 })
@@ -81,7 +81,7 @@ export class UsersRoutes extends CommonRoutesConfig {
       usersController.patch,
     ]);
 
-    this.app.put(`/users/:userId/permissionLevel/:permissionLevel`, [
+    this.app.put(`${process.env.BASE_URL}/users/:userId/permissionLevel/:permissionLevel`, [
       jwtMiddleware.validJWTNeeded,
       commonPermissionMiddleware.onlySameUserOrAdminCanDoThisAction,
       commonPermissionMiddleware.minimumPermissionLevelRequired(

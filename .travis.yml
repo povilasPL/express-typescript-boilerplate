@@ -1,19 +1,13 @@
-language: generic
-
 sudo: required
 
 services:
   - docker
 
 before_install:
-  - npm run start:docker
+  - docker-compose up -d --build
 
 script:
   - npm run lint
-  - npm run test
 
 after_success:
-  - npm run exit
-
-after_failure:
   - npm run exit
