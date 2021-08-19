@@ -5,6 +5,8 @@ services:
 
 script:
   - npm run start:docker
+  - npm run lint
+  - npm run test
 
 after_script:
   - npm run exit
