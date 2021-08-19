@@ -3,8 +3,12 @@ sudo: required
 services:
   - docker
 
-script:
+before_script:
   - npm run start:docker
+
+script:
+  - npm run lint
+  - npm run test
 
 after_script:
   - npm run exit

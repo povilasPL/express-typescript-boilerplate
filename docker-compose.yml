@@ -16,15 +16,3 @@ services:
     image: mongo
     ports:
       - '27017:27017'
-  
-  tests:
-    build: 
-      context: .
-      dockerfile: Dockerfile.dev
-    command: ["npm", "run", "test"]
-  
-  lint:
-    build:
-      context: .
-      dockerfile: Dockerfile.dev
-    command: ["npm", "run", "lint"]
