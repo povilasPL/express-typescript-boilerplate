@@ -10,8 +10,21 @@ services:
       - '9000:9000'
     external_links:
       - mongo
+    command: ["npm", "run", "start"]
 
   mongo:
     image: mongo
     ports:
       - '27017:27017'
+  
+  tests:
+    build: 
+      context: .
+      dockerfile: Dockerfile.dev
+    command: ["npm", "run", "test"]
+  
+  lint:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    command: ["npm", "run", "lint"]

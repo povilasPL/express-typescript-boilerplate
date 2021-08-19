@@ -15,12 +15,9 @@ import { UsersRoutes } from "./users/users.routes.config";
 const app: express.Application = express();
 const server: http.Server = http.createServer(app);
 const debugLog: debug.IDebugger = debug("app");
-const dotenvResult = dotenv.config();
 const port = process.env.PORT || 3000;
 const routes: Array<CommonRoutesConfig> = [];
 const runningMessage = `Server is up and running at http://localhost:${port}`;
-
-if (dotenvResult.error) console.log(dotenvResult.error);
 
 const loggerOptions: expressWinston.LoggerOptions = {
   transports: [new winston.transports.Console()],
@@ -39,6 +36,7 @@ if (!process.env.DEBUG) {
   }
 }
 
+dotenv.config();
 app.use(express.json());
 app.use(cors());
 app.use(helment());
