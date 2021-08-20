@@ -5,6 +5,7 @@
   "main": "app.ts",
   "scripts": {
     "start": "tsc && node --unhandled-rejections=strict ./dist/app.js",
+    "build": "tsc",
     "start:docker": "docker-compose up --build -d",
     "exit": "docker-compose down",
     "debug": "export DEBUG=* && npm run start",
