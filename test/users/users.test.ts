@@ -29,7 +29,7 @@ describe("users and auth endpoints", function () {
   });
 
   it("should allow a POST to /users", async function () {
-    const res = await request.post("/users").send(firstUserBody);
+    const res = await request.post(`${process.env.BASE_URL}/users`).send(firstUserBody);
 
     expect(res.status).to.equal(201);
     expect(res.body).not.to.be.empty;
@@ -39,7 +39,7 @@ describe("users and auth endpoints", function () {
   });
 
   it("should allow a POST to /auth", async function () {
-    const res = await request.post("/auth").send(firstUserBody);
+    const res = await request.post(`${process.env.BASE_URL}/auth`).send(firstUserBody);
     expect(res.status).to.equal(201);
     expect(res.body).not.to.be.empty;
     expect(res.body).to.be.an("object");
@@ -50,7 +50,7 @@ describe("users and auth endpoints", function () {
 
   it("should allow a GET from /users/:userId with an access token", async function () {
     const res = await request
-      .get(`/users/${firstUserIdTest}`)
+      .get(`${process.env.BASE_URL}/users/${firstUserIdTest}`)
       .set({ Authorization: `Bearer ${accessToken}` })
       .send();
     expect(res.status).to.equal(200);
@@ -64,7 +64,7 @@ describe("users and auth endpoints", function () {
   describe("with a valid access token", async function () {
     it("should allow a GET from /users", async function () {
       const res = await request
-        .get(`/users`)
+        .get(`${process.env.BASE_URL}/users`)
         .set({ Authorization: `Bearer ${accessToken}` })
         .send();
       expect(res.status).to.equal(403);
@@ -72,7 +72,7 @@ describe("users and auth endpoints", function () {
 
     it("should disallow a PATCH to /users/:userId", async function () {
       const res = await request
-        .patch(`/users/${firstUserIdTest}`)
+        .patch(`${process.env.BASE_URL}/users/${firstUserIdTest}`)
         .set({ Authorization: `Bearer ${accessToken}` })
         .send({
           firstName: newFirstName,
@@ -82,7 +82,7 @@ describe("users and auth endpoints", function () {
 
     it("should disallow a PUT to /users/:userId with an nonexistant ID", async function () {
       const res = await request
-        .put(`/users/i-do-not-exist`)
+        .put(`${process.env.BASE_URL}/users/i-do-not-exist`)
         .set({ Authorization: `Bearer ${accessToken}` })
         .send({
           email: firstUserBody.email,
@@ -96,7 +96,7 @@ describe("users and auth endpoints", function () {
 
     it("should disallow a PUT to /users/:userId trying to change the permission level", async function () {
       const res = await request
-        .put(`/users/${firstUserIdTest}`)
+        .put(`${process.env.BASE_URL}/users/${firstUserIdTest}`)
         .set({ Authorization: `Bearer ${accessToken}` })
         .send({
           email: firstUserBody.email,
@@ -115,7 +115,7 @@ describe("users and auth endpoints", function () {
 
     it("should allow a PUT to /users/:userId/permissionLevel/2 for testing", async function () {
       const res = await request
-        .put(`/users/${firstUserIdTest}/permissionLevel/2`)
+        .put(`${process.env.BASE_URL}/users/${firstUserIdTest}/permissionLevel/2`)
         .set({ Authorization: `Bearer ${accessToken}` })
         .send({});
       expect(res.status).to.equal(204);
@@ -124,7 +124,7 @@ describe("users and auth endpoints", function () {
     describe("with a new permission level", async function () {
       it("should allow a POST to /auth/refresh-token", async function () {
         const res = await request
-          .post("/auth/refresh-token")
+          .post(`${process.env.BASE_URL}/auth/refresh-token`)
           .set({ Authorization: `Bearer ${accessToken}` })
           .send({ refreshToken });
         expect(res.status).to.equal(201);
@@ -137,7 +137,7 @@ describe("users and auth endpoints", function () {
 
       it("should allow a PUT to /users/:userId to change first and last names", async function () {
         const res = await request
-          .put(`/users/${firstUserIdTest}`)
+          .put(`${process.env.BASE_URL}/users/${firstUserIdTest}`)
           .set({ Authorization: `Bearer ${accessToken}` })
           .send({
             email: firstUserBody.email,
@@ -151,7 +151,7 @@ describe("users and auth endpoints", function () {
 
       it("should allow a GET from /users/:userId and should have a new full name", async function () {
         const res = await request
-          .get(`/users/${firstUserIdTest}`)
+          .get(`${process.env.BASE_URL}/users/${firstUserIdTest}`)
           .set({ Authorization: `Bearer ${accessToken}` })
           .send();
         expect(res.status).to.equal(200);
@@ -166,7 +166,7 @@ describe("users and auth endpoints", function () {
 
       it("should allow a DELETE from /users/:userId", async function () {
         const res = await request
-          .delete(`/users/${firstUserIdTest}`)
+          .delete(`${process.env.BASE_URL}/users/${firstUserIdTest}`)
           .set({ Authorization: `Bearer ${accessToken}` })
           .send();
         expect(res.status).to.equal(204);
