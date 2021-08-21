@@ -11,13 +11,13 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      command: npm run lint
+    command: npm run lint
 
   test:
     build:
       context: .
       dockerfile: Dockerfile
-      command: npm run test
+    command: npm run test
     depends_on: 
         - mongoTest
     environment: 
