@@ -1,7 +1,6 @@
 version: '3'
 services:
   mongoTest:
-    env_file:
     environment: 
       - PORT=${PORT}
       - BASE_URL=${BASE_URL}
