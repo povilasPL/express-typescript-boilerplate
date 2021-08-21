@@ -4,7 +4,7 @@ services:
   - docker
 
 before_script:
-  - docker-compose up --build -d
+  - docker-compose -f docker-compose.dev.yml up --build -d
   
 script:
   - npm run lint

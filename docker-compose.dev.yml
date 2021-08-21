@@ -1,0 +1,17 @@
+version: '3'
+services:
+  mongoTest:
+    env_file:
+    environment: 
+      - PORT=${PORT}
+      - BASE_URL=${BASE_URL}
+      - JWT_SECRET=${JWT_SECRET}
+      - MONGO_USER=${MONGO_USER}
+      - MONGO_PASSWORD=${MONGO_PASSWORD}
+      - MONGO_IP=${MONGO_IP}
+      - MONGO_PORT=${MONGO_PORT}
+    image: mongo
+    volumes:
+      - ./data:/data/db
+    ports:
+      - "27017:27017"
