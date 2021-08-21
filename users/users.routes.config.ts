@@ -14,9 +14,9 @@ export class UsersRoutes extends CommonRoutesConfig {
     super(app, "UsersRoutes");
   }
 
-  configureRoutes() : express.Application {
+  configureRoutes(): express.Application {
     this.app
-      .route(`${process.env.BASE_URL}/users`)
+      .route(`${process.env.BASE_URI}/users`)
       .get(
         jwtMiddleware.validJWTNeeded,
         commonPermissionMiddleware.minimumPermissionLevelRequired(
@@ -34,10 +34,10 @@ export class UsersRoutes extends CommonRoutesConfig {
         usersController.createUser
       );
 
-    this.app.param('userId', usersMiddleware.extractUserId);
+    this.app.param("userId", usersMiddleware.extractUserId);
 
     this.app
-      .route(`${process.env.BASE_URL}/users/:userId`)
+      .route(`${process.env.BASE_URI}/users/:userId`)
       .all(
         usersMiddleware.validateUserExists,
         jwtMiddleware.validJWTNeeded,
@@ -46,7 +46,7 @@ export class UsersRoutes extends CommonRoutesConfig {
       .get(usersController.getUserById)
       .delete(usersController.removeUser);
 
-    this.app.put(`${process.env.BASE_URL}/users/:userId`, [
+    this.app.put(`${process.env.BASE_URI}/users/:userId`, [
       body("email").isEmail(),
       body("password")
         .isLength({ min: 6 })
@@ -63,7 +63,7 @@ export class UsersRoutes extends CommonRoutesConfig {
       usersController.put,
     ]);
 
-    this.app.patch(`${process.env.BASE_URL}/users/:userId`, [
+    this.app.patch(`${process.env.BASE_URI}/users/:userId`, [
       body("email").isEmail().optional(),
       body("password")
         .isLength({ min: 6 })
@@ -81,14 +81,14 @@ export class UsersRoutes extends CommonRoutesConfig {
       usersController.patch,
     ]);
 
-    this.app.put(`${process.env.BASE_URL}/users/:userId/permissionLevel/:permissionLevel`, [
+    this.app.put(`${process.env.BASE_URI}/users/:userId/permissionLevel/:permissionLevel`, [
       jwtMiddleware.validJWTNeeded,
       commonPermissionMiddleware.onlySameUserOrAdminCanDoThisAction,
       commonPermissionMiddleware.minimumPermissionLevelRequired(
-          PermissionLevel.FREE_PERMISSION
+        PermissionLevel.FREE_PERMISSION
       ),
       usersController.updatePermissionLevel,
-  ]);
+    ]);
 
     return this.app;
   }

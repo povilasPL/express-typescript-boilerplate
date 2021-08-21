@@ -17,7 +17,7 @@ const server: http.Server = http.createServer(app);
 const debugLog: debug.IDebugger = debug("app");
 const port = process.env.PORT || 3000;
 const routes: Array<CommonRoutesConfig> = [];
-const runningMessage = `Server is up and running at http://localhost:${port}`;
+const runningMessage = `Server is up and running at http://localhost:${port}${process.env.BASE_URI}`;
 
 const loggerOptions: expressWinston.LoggerOptions = {
   transports: [new winston.transports.Console()],
@@ -45,7 +45,7 @@ app.use(expressWinston.logger(loggerOptions));
 routes.push(new UsersRoutes(app));
 routes.push(new AuthRoutes(app));
 
-app.get(`${process.env.BASE_URL}`, (req: express.Request, res: express.Response) => {
+app.get(`${process.env.BASE_URI}`, (req: express.Request, res: express.Response) => {
   res.status(200).send(runningMessage);
 });
 

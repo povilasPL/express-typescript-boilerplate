@@ -13,7 +13,7 @@ export class AuthRoutes extends CommonRoutesConfig {
   }
 
   configureRoutes(): express.Application {
-    this.app.post(`${process.env.BASE_URL}/auth`, [
+    this.app.post(`${process.env.BASE_URI}/auth`, [
       body("email").isEmail(),
       body("password").isString(),
       bodyValidationMiddleware.verifyBodyFieldsErrors,
@@ -21,7 +21,7 @@ export class AuthRoutes extends CommonRoutesConfig {
       authController.createJWT,
     ]);
 
-    this.app.post(`${process.env.BASE_URL}/auth/refresh-token`, [
+    this.app.post(`${process.env.BASE_URI}/auth/refresh-token`, [
       jwtMiddleware.validJWTNeeded,
       jwtMiddleware.verifyRefreshBodyField,
       jwtMiddleware.validRefreshNeeded,

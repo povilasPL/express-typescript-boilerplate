@@ -28,6 +28,7 @@ class MongooseService {
       .connect(this.MONGO_URI, this.mongooseOptions)
       .then(() => {
         log("MongoDB is connected");
+        console.log('fuck yeah 2')
       })
       .catch((err) => {
         const retrySeconds = 5;
