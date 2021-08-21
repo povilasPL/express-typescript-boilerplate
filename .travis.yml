@@ -2,13 +2,9 @@ sudo: required
 
 services:
   - docker
-
-before_script:
-  - docker-compose -f docker-compose.dev.yml up --build -d
   
 script:
-  - npm run lint
-  - npm run test
+  - docker-compose -f docker-compose.dev.yml up --build -d
 
 after_success:
   - npm run exit
